@@ -7,6 +7,7 @@ package supert;
 
 import java.awt.Dimension;
 import java.awt.Graphics;
+import javax.swing.Icon;
 import javax.swing.ImageIcon;
 
 /**
@@ -23,17 +24,21 @@ public class Imagen extends javax.swing.JPanel {
         this.setSize(162, 64);
     }
 
+    public Imagen(String a, String b) {
+        this.setSize(100, 100);
+    }
+
     //Se crea un método cuyo parámetro debe ser un objeto Graphics
-    public void paint(Graphics grafico) {
+    public void paint(Graphics g) {
         Dimension height = getSize();
 
         //Se selecciona la imagen que tenemos en el paquete de la //ruta del programa
-        ImageIcon Img = new ImageIcon(getClass().getResource("/images/logo.jpeg"));
+        ImageIcon logo = new ImageIcon(getClass().getResource("/images/logo.jpeg"));
 
         //se dibuja la imagen que tenemos en el paquete Images //dentro de un panel
-        grafico.drawImage(Img.getImage(), 0, 0, height.width, height.height, null);
+        g.drawImage(logo.getImage(), 0, 0, height.width, height.height, null);
 
         setOpaque(false);
-        super.paintComponent(grafico);
+        super.paintComponent(g);
     }
 }

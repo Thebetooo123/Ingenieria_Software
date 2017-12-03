@@ -5,10 +5,14 @@
  */
 package supert;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Date;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -22,11 +26,11 @@ public class Principal extends javax.swing.JFrame implements Runnable {
     public Principal() {
         initComponents();
         this.getContentPane().setBackground(Color.decode("#f6f598"));
-        pnlSupBar.setBackground(Color.decode("#00984D"));
+        jMenuBar1.setBackground(Color.decode("#00984D"));
         h1 = new Thread(this);
         h1.start();
-        Imagen img = new Imagen("");
-        panLogo.add(img);
+        Imagen logo = new Imagen("");
+        panLogo.add(logo);
         panLogo.repaint();
         setLocationRelativeTo(null);
         setVisible(true);
@@ -48,10 +52,30 @@ public class Principal extends javax.swing.JFrame implements Runnable {
         jLabel2 = new javax.swing.JLabel();
         panLogo = new javax.swing.JPanel();
         jTextField2 = new javax.swing.JTextField();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        txtOrden = new javax.swing.JTextArea();
+        cbPpal = new javax.swing.JComboBox<>();
+        cbSubpl = new javax.swing.JComboBox<>();
+        cbRefre = new javax.swing.JComboBox<>();
+        btnCargo = new javax.swing.JButton();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        menTask = new javax.swing.JMenu();
+        miHist = new javax.swing.JMenuItem();
+        miVtas = new javax.swing.JMenuItem();
+        miIng = new javax.swing.JMenuItem();
+        miLogout = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        pnlSupBar.setBackground(new java.awt.Color(0, 152, 77));
+
+        jLabel1.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel1.setText("Super Tortas");
+        jLabel1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel1MouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout pnlSupBarLayout = new javax.swing.GroupLayout(pnlSupBar);
         pnlSupBar.setLayout(pnlSupBarLayout);
@@ -62,7 +86,7 @@ public class Principal extends javax.swing.JFrame implements Runnable {
                 .addComponent(jLabel1)
                 .addGap(124, 124, 124)
                 .addComponent(lblHr)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 222, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 218, Short.MAX_VALUE)
                 .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -77,7 +101,7 @@ public class Principal extends javax.swing.JFrame implements Runnable {
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlSupBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel1)
                         .addComponent(lblHr)))
-                .addGap(14, 14, 14))
+                .addGap(8, 8, 8))
         );
 
         jLabel2.setText("Le atendió");
@@ -93,21 +117,88 @@ public class Principal extends javax.swing.JFrame implements Runnable {
             .addGap(0, 64, Short.MAX_VALUE)
         );
 
+        txtOrden.setColumns(20);
+        txtOrden.setRows(5);
+        jScrollPane1.setViewportView(txtOrden);
+
+        cbPpal.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Torta", "Tacos", "Burrito", "Platillo" }));
+        cbPpal.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbPpalActionPerformed(evt);
+            }
+        });
+
+        cbSubpl.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Lomo", "Pastor", "Bistek" }));
+
+        cbRefre.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Coca", "Fanta", "Seven", "Pepsi" }));
+
+        btnCargo.setText("Cargo");
+        btnCargo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCargoActionPerformed(evt);
+            }
+        });
+
+        menTask.setText("Tareas");
+
+        miHist.setText("Historial");
+        miHist.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                miHistActionPerformed(evt);
+            }
+        });
+        menTask.add(miHist);
+
+        miVtas.setText("Ventas");
+        miVtas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                miVtasActionPerformed(evt);
+            }
+        });
+        menTask.add(miVtas);
+
+        miIng.setText("Ingredientes");
+        menTask.add(miIng);
+
+        miLogout.setText("Cerrar sesión");
+        miLogout.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                miLogoutActionPerformed(evt);
+            }
+        });
+        menTask.add(miLogout);
+
+        jMenuBar1.add(menTask);
+
+        setJMenuBar(jMenuBar1);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(pnlSupBar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addGap(73, 73, 73))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(50, 50, 50)))
-                .addComponent(panLogo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(12, 12, 12)
+                        .addComponent(btnCargo)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(cbPpal, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cbSubpl, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cbRefre, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(55, 55, 55)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(panLogo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel2)
+                                .addGap(23, 23, 23)))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -117,15 +208,67 @@ public class Principal extends javax.swing.JFrame implements Runnable {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addComponent(panLogo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(panLogo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 234, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(cbPpal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cbSubpl, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cbRefre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnCargo)))
+                .addGap(0, 23, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
+        // TODO add your handling code here:
+
+    }//GEN-LAST:event_jLabel1MouseClicked
+
+    private void miVtasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miVtasActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_miVtasActionPerformed
+
+    private void miLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miLogoutActionPerformed
+        // TODO add your handling code here:
+        if (JOptionPane.showConfirmDialog(null, "¿Estás seguro que quieres cerrar la sesión?", "Cerrar sesión",
+                JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+            // yes option
+            this.dispose();
+            Login login = new Login();
+            login.setVisible(true);
+        } else {
+            // no option
+        }
+    }//GEN-LAST:event_miLogoutActionPerformed
+
+    private void miHistActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miHistActionPerformed
+        // TODO add your handling code here:
+
+    }//GEN-LAST:event_miHistActionPerformed
+
+    private void cbPpalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbPpalActionPerformed
+        // TODO add your handling code here:
+        if (cbPpal.getSelectedIndex() == 3) {
+            cbSubpl.disable();
+        }
+    }//GEN-LAST:event_cbPpalActionPerformed
+
+    private void btnCargoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCargoActionPerformed
+        // TODO add your handling code here:
+        txtOrden.append(cbPpal.getSelectedItem().toString() + "\n");
+        txtOrden.append(cbSubpl.getSelectedItem().toString() + "\n");
+        txtOrden.append(cbRefre.getSelectedItem().toString() + "\n");
+
+    }//GEN-LAST:event_btnCargoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -163,13 +306,25 @@ public class Principal extends javax.swing.JFrame implements Runnable {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnCargo;
+    private javax.swing.JComboBox<String> cbPpal;
+    private javax.swing.JComboBox<String> cbRefre;
+    private javax.swing.JComboBox<String> cbSubpl;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JLabel lblHr;
+    private javax.swing.JMenu menTask;
+    private javax.swing.JMenuItem miHist;
+    private javax.swing.JMenuItem miIng;
+    private javax.swing.JMenuItem miLogout;
+    private javax.swing.JMenuItem miVtas;
     private javax.swing.JPanel panLogo;
     private javax.swing.JPanel pnlSupBar;
+    private javax.swing.JTextArea txtOrden;
     // End of variables declaration//GEN-END:variables
 
     String hora, min, seg, ampm;
